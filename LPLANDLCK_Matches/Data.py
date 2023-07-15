@@ -58,6 +58,3 @@ def Data():
 
 
 print("已爬取到数据...")
-# l1, l2, LPL_list, LCK_list = Data()
-# print(LPL_list)
-# print(LCK_list)

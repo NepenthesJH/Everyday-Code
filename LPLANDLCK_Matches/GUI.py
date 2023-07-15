@@ -55,12 +55,12 @@ label2.setFont(font)
 list_widget1 = QListWidget()
 # 添加项目到列表
 item = QListWidgetItem()
-item.setText('比赛队伍\t\t比分\t比赛时间')
+item.setText('比赛队伍' + ' ' * 8 + '\t' + '比分' + '\t' + '比赛时间')
 list_widget1.addItem(item)
 
 for i in range(l1):
     item = QListWidgetItem()
-    item.setText('%s     \t%s \t%s' % (LPL_list[3 * i + 0], LPL_list[3 * i + 1], LPL_list[3 * i + 2]))
+    item.setText(LPL_list[3 * i + 0] + ' ' * 8 + '\t' + LPL_list[3 * i + 1] + '\t' + LPL_list[3 * i + 2])
     list_widget1.addItem(item)
 
 # 创建标签控件3（左对齐的字符串）
@@ -73,13 +73,12 @@ label3.setFont(font)
 list_widget2 = QListWidget()
 # 添加项目到列表
 item = QListWidgetItem()
-item.setText('比赛队伍\t\t比分\t比赛时间')
+item.setText('比赛队伍' + ' ' * 8 + '\t' + '比分' + '\t' + '比赛时间')
 list_widget2.addItem(item)
 
 for i in range(l2):
     item = QListWidgetItem()
-    # 这里空五格，有说法
-    item.setText('%s     \t%s \t%s' % (LCK_list[3 * i + 0], LCK_list[3 * i + 1], LCK_list[3 * i + 2]))
+    item.setText(LCK_list[3 * i + 0] + ' ' * 8 + '\t' + LCK_list[3 * i + 1] + '\t' + LCK_list[3 * i + 2])
     list_widget2.addItem(item)
 
 # 创建垂直布局，并将标签添加到布局中
