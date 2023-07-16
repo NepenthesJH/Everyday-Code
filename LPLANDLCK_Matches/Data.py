@@ -12,9 +12,8 @@ def Data():
     response2 = requests.get(url2, headers)
 
     today = datetime.date.today()
-    tomorrow = today + datetime.timedelta(days=1)
 
-    pattern1 = re.compile('\{"time":"%s"(.*?)\{"time":"%s"' % (str(today), str(tomorrow)))
+    pattern1 = re.compile('\{"time":"%s"(.*?)\{"time":' % str(today))
     pattern2 = re.compile('.*?"startTime":"(.*?)".*?"leftLogo":\{.*?"name":"(.*?)".*?"score":"(.*?)".*?"rightLogo":\{'
                           '.*?"name":"(.*?)".*?"score":"(.*?)".*?')
 
@@ -58,3 +57,6 @@ def Data():
 
 
 print("已爬取到数据...")
+# l1, l2, LPL_list, LCK_list = Data()
+# print(LPL_list)
+# print(LCK_list)
