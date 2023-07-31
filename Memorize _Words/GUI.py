@@ -6,7 +6,7 @@ from Random_Words import Random_Words
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidget, QVBoxLayout, QWidget, QLabel, QDesktopWidget
 
 
-class MyWindow(QMainWindow):
+class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -62,6 +62,6 @@ class MyWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = MyWindow()
+    window = Window()
     window.show()
     sys.exit(app.exec_())
