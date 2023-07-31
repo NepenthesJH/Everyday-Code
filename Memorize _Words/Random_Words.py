@@ -31,6 +31,15 @@ def Random_Words():
             writer.writerow(today_words)
             writer.writerow([n + 1])
             file.close()
+    if n < N:
+        # 读取文本文件内容到列表
+        with open('./Words_Index.csv', 'r') as file:
+            lines = file.readlines()
+        # 修改列表中的最后一个元素
+        lines[-1] = str(n + 1) + '\n'
+        # 将修改后的列表重新写入文件
+        with open('./Words_Index.csv', 'w') as file:
+            file.writelines(lines)
 
     # 创建一个 StringIO 对象来捕获 print() 输出的内容
     output_capturer = StringIO()
