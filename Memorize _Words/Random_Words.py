@@ -36,7 +36,7 @@ def Random_Words():
         with open('./Words_Index.csv', 'r') as file:
             lines = file.readlines()
         # 修改列表中的最后一个元素
-        lines[-1] = str(n + 1) + '\n'
+        lines[-1] = str(N) + '\n'
         # 将修改后的列表重新写入文件
         with open('./Words_Index.csv', 'w') as file:
             file.writelines(lines)
