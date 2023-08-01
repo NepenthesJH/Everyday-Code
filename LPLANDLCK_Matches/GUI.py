@@ -111,6 +111,7 @@ class MyWindow(QMainWindow):
         window_height = 400
         window_x = (screen_width - window_width) // 2
         window_y = (screen_height - window_height) // 2
+        self.setFixedSize(window_width, window_height)
         self.setGeometry(window_x, window_y, window_width, window_height)
         self.setWindowTitle('LPL&LCK Matches')
 
