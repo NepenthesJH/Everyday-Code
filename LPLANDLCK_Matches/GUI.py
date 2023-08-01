@@ -90,7 +90,7 @@ class MyWindow(QMainWindow):
                 item = QTableWidgetItem(LCK_list[j + 3 * i])
                 item.setTextAlignment(Qt.AlignCenter)
                 table_widget2.setItem(i, j, item)
-                # 设置单元格尺寸
+        # 设置单元格尺寸
         for row in range(l2):
             table_widget2.setRowHeight(row, 40)  # 设置行高为30
         for col in range(3):
