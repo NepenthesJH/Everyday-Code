@@ -11,6 +11,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QDesktopWidget, 
 class HandSpeedWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        # 设置全局字体
+        self.font1 = QFont("YouYuan", 24)
+        self.font2 = QFont("YouYuan", 22)
+        self.font3 = QFont("YouYuan", 18)
         # 创建主窗口部件
         main_widget = QWidget(self)
         self.setCentralWidget(main_widget)
@@ -27,8 +31,7 @@ class HandSpeedWindow(QMainWindow):
         window_y = (screen_height - window_height) // 2
         self.setFixedSize(window_width, window_height)
         self.setGeometry(window_x, window_y, window_width, window_height)
-        self.setWindowTitle('人体反应测试')
-
+        self.setWindowTitle('反应测试')
         # 禁用窗口的最大化功能
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
 
@@ -38,23 +41,46 @@ class HandSpeedWindow(QMainWindow):
         container.setLayout(layout)
         self.setCentralWidget(container)
 
-        # 在窗口中心生成一个200*80的按钮
+        # 生成三个按钮
+        # 设置按钮的通用属性
         button_width = 200
         button_height = 80
         button_x = (window_width - button_width) // 2
         button_y = (window_height - button_height) // 2
+        # 生成一个开始按钮
         # 设置按钮字体和大小
         self.start_button = QPushButton("开始测试", self)
         self.start_button.setFixedSize(button_width, button_height)
         self.start_button.setGeometry(button_x, button_y, button_width, button_height)
-        font = QFont("YouYuan", 24)
-        self.start_button.setFont(font)
+        self.start_button.setFont(self.font1)
+
+        # 生成两个功能性按钮，“再测一次”和“历史数据”
+        # *再测一次*
+        # 设置按钮字体和大小
+        self.again_button = QPushButton("再测一次", self)
+        self.again_button.setFixedSize(button_width, button_height)
+        self.again_button.setGeometry(button_x - 180, button_y + 120, button_width, button_height)
+        self.again_button.setFont(self.font1)
+        # *历史数据*
+        # 设置按钮字体和大小
+        self.data_button = QPushButton("历史数据", self)
+        self.data_button.setFixedSize(button_width, button_height)
+        self.data_button.setGeometry(button_x + 180, button_y + 120, button_width, button_height)
+        self.data_button.setFont(self.font1)
+        # 按钮的开始状态
+        self.start_button.show()
+        self.again_button.hide()
+        self.data_button.hide()
         # 连接按钮点击事件到槽函数
         self.start_button.clicked.connect(self.on_button_clicked)
+        self.again_button.clicked.connect(self.on_button_clicked)
+        self.data_button.clicked.connect(self.data_list)
         # 将按钮放到布局中
-        layout.addWidget(self.start_button)
+        # layout.addWidget(self.start_button)
+        # layout.addWidget(self.again_button)
+        # layout.addWidget(self.data_button)
 
-        # 初始化标识是否显示文字的属性，分为0，1，2
+        # 初始化标识是否显示文字的属性，分为0、1、2
         # 注:0档代表未点击按钮，1档代表点击按钮之后、绿屏未出现，2档代表绿屏出现之后
         self.show_text = 0
         # 记录点击次数
@@ -68,30 +94,6 @@ class HandSpeedWindow(QMainWindow):
         self.user_data = []
         # 记录时间
         self.user_datetime = []
-
-        # 两个功能性按钮，“再测一次”和“历史数据”
-        # *再测一次*
-        # 设置按钮字体和大小
-        self.again_button = QPushButton("再测一次", self)
-        self.again_button.setFixedSize(button_width, button_height)
-        self.again_button.setGeometry(button_x - 180, button_y + 120, button_width, button_height)
-        # font = QFont("YouYuan", 24)
-        self.again_button.setFont(font)
-        # 开始的时候该按钮隐藏
-        self.again_button.hide()
-        # 连接按钮点击事件到槽函数
-        self.again_button.clicked.connect(self.on_button_clicked)
-        # *历史数据*
-        # 设置按钮字体和大小
-        self.data_button = QPushButton("历史数据", self)
-        self.data_button.setFixedSize(button_width, button_height)
-        self.data_button.setGeometry(button_x + 180, button_y + 120, button_width, button_height)
-        # font = QFont("YouYuan", 24)
-        self.data_button.setFont(font)
-        # 开始的时候该按钮隐藏
-        self.data_button.hide()
-        # 连接按钮点击事件到槽函数
-        self.data_button.clicked.connect(self.data_list)
 
     def on_button_clicked(self):
         # 测试环境初始化
@@ -110,7 +112,8 @@ class HandSpeedWindow(QMainWindow):
         self.clicked_number = 0
         # 设置定时器，在random_time秒后执行clear_text函数
         self.timer.start(random_time)
-        self.timer.timeout.connect(self.clear_text)
+        if self.clicked_number == 0:
+            self.timer.timeout.connect(self.clear_text)
         self.update()
 
     def paintEvent(self, event):
@@ -118,32 +121,31 @@ class HandSpeedWindow(QMainWindow):
         if self.show_text == 1 and self.clicked_number == 0:
             painter = QPainter(self)
             painter.setPen(Qt.black)
-            painter.setFont(QFont("YouYuan", 22))
+            painter.setFont(self.font2)
             painter.drawText(self.rect(), Qt.AlignCenter, "请看到绿色时点击屏幕")
         if self.show_text == 2 and self.clicked_number == 1:
             painter = QPainter(self)
             painter.setPen(Qt.black)
-            painter.setFont(QFont("YouYuan", 22))
-            font = painter.font()
-            font.setPointSize(22)
-            painter.setFont(font)
-            metrics = QFontMetrics(font)
+            painter.setFont(self.font2)
+            metrics = QFontMetrics(self.font2)
             text_width = metrics.width(f"本次测试反应时间为: {round(self.testing_time)} ms")
             text_height = metrics.height()
             x = round((self.width() - text_width) / 2)
             y = round((self.height() - text_height) / 2) - 120
             painter.drawText(x, y, self.width(), self.height(), Qt.AlignLeft,
                              f"本次测试反应时间为: {round(self.testing_time)} ms")
+            # 重新设置按钮状态
+            self.start_button.hide()
             self.again_button.show()
             self.data_button.show()
 
     def clear_text(self):
         # 文字消失，窗口背景变为绿色
         self.show_text = 2
-        self.update()
         if self.show_text == 2 and self.clicked_number == 0:
             self.start_time = time()
             self.setStyleSheet("background-color: #72FF93;")
+        self.update()
 
     def mousePressEvent(self, event):
         # 当窗口背景为绿色且未点击过窗口时，点击窗口后恢复原来的颜色，并且再次点击无效
@@ -172,7 +174,7 @@ class HandSpeedWindow(QMainWindow):
         # 创建标签控件（居中对齐的字符串）
         label = QLabel("历史数据")
         label.setAlignment(Qt.AlignCenter)  # 设置标签的对齐方式为居中对齐
-        label.setFont(QFont("YouYuan", 18))
+        label.setFont(self.font3)
         layout.addWidget(label)
 
         # 创建表格控件

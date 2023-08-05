@@ -1,5 +1,5 @@
-from PIL import Image
 import numpy as np
+from PIL import Image
 
 
 def image_to_matrix(image_path):
@@ -25,5 +25,4 @@ if __name__ == "__main__":
 
     output_path = '蓝底照片.jpg'
     matrix_to_image(image_matrix, output_path)
-
     print("照片换底成功！！！")
