@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
 # 定义超参数
-input_size = 20  # 处理后的图像为20*20
+input_size = 28  # 处理后的图像为28*28
 num_classes = 10  # 类别数为10
 num_epochs = 10  # 训练的总循环周期为10
 batch_size = 64  # 指定批次大小，即64张图片
@@ -18,6 +18,7 @@ test_dataset = datasets.MNIST(root='C:/CodeFile/Data', train=False, transform=tr
 # 构建batch数据
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True, pin_memory=True)
+
 
 class CNN(nn.Module):
     def __init__(self):
@@ -103,15 +104,11 @@ for epoch in range(num_epochs):
                 right = accuracy(output, target2)
                 val_rights.append(right)
 
-
             # 准确率计算
             train_r = (sum([tup[0] for tup in train_rights]), sum([tup[1] for tup in train_rights]))
             val_r = (sum([tup[0] for tup in val_rights]), sum([tup[1] for tup in val_rights]))
             # 输出训练过程
             print('epoch:{} [{}/{} ({:.0f}%)]\tloss:{:.6f}\ttrain accuracy:{:.2f}%\t test accuracy:{:.2f}%'.format(
-                epoch, batch_idx * batch_size, len(train_loader.dataset),
-                       100 * batch_idx / len(train_loader),
-                loss.data,
-                       100 * train_r[0] / train_r[1],
-                       100 * val_r[0] / val_r[1]
+                epoch, batch_idx * batch_size, len(train_loader.dataset), 100. * batch_idx / len(train_loader),
+                loss.data, 100. * train_r[0] / train_r[1], 100. * val_r[0] / val_r[1]
             ))

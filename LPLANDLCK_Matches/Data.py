@@ -5,15 +5,25 @@ import requests
 
 
 def Data():
-    url1 = 'https://tiyu.baidu.com/match/lpl/tab/%E8%B5%9B%E7%A8%8B'
-    url2 = 'https://tiyu.baidu.com/match/lck/tab/%E8%B5%9B%E7%A8%8B'
+    url1 = 'https://tiyu.baidu.com/match/LPL/tab/%E8%B5%9B%E7%A8%8B'
+    url2 = 'https://tiyu.baidu.com/match/LCK/tab/%E8%B5%9B%E7%A8%8B'
     headers = {'Cache-Control': 'no-cache'}
     response1 = requests.get(url1, headers)
     response2 = requests.get(url2, headers)
 
     today = datetime.date.today()
+    month = today.month
+    day = today.day
+    if month < 10:
+        month = '0' + str(month)
+    else:
+        month = str(month)
+    if day < 10:
+        day = '0' + str(day)
+    else:
+        day = str(day)
 
-    pattern1 = re.compile('\{"time":"%s"(.*?)\{"time":' % str(today))
+    pattern1 = re.compile('\{"time":"%s"(.*?)"title":"%s-%s' % (str(today), month, day))
     pattern2 = re.compile('.*?"startTime":"(.*?)".*?"leftLogo":\{.*?"name":"(.*?)".*?"score":"(.*?)".*?"rightLogo":\{'
                           '.*?"name":"(.*?)".*?"score":"(.*?)".*?')
 
@@ -22,21 +32,6 @@ def Data():
 
     LCK_Result = re.findall(pattern1, response2.text)
     LCK = re.findall(pattern2, str(LCK_Result))
-
-    # # 控制台输出
-    # print("LPL:")
-    # print("比赛队伍\t\t比分\t\t比赛时间")
-    # l1 = len(LPL)
-    # for i in range(l1):
-    #     tmp = LPL[i]
-    #     print("%s vs %s\t%s:%s\t\t%s" % (tmp[1], tmp[3], tmp[2], tmp[4], tmp[0]))
-    #
-    # print("LCK:")
-    # print("比赛队伍\t\t比分\t\t比赛时间")
-    # l2 = len(LCK)
-    # for i in range(l2):
-    #     tmp = LCK[i]
-    #     print("%s vs %s\t%s:%s\t\t%s" % (tmp[1], tmp[3], tmp[2], tmp[4], tmp[0]))
 
     # 矩阵形式输出
     l1 = len(LPL)
