@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
+# 这个代码存在bug，比如说存在同学叫“张大”、“张大大”，以及重名情况
 
 # 读取班级名单
 students = pd.read_csv('Students.csv')
