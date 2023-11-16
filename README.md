@@ -1,4 +1,4 @@
-## Everyday-code ##
+## Everyday-Code ##
 本仓库代码关于日常生活、学习、工作的程序，代码内容不限于算法、工具型程序、作业题等。
 
 FindStudent是关于查找未交作业学生的程序</br>
