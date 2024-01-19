@@ -16,9 +16,11 @@ def matrix_to_image(matrix, output_path):
 if __name__ == "__main__":
     image_path = "白底照片.jpg"  # 替换成实际的图像文件路径
     image_matrix = image_to_matrix(image_path)
+    print(image_matrix.shape)
     for i in np.arange(640):
         for j in np.arange(480):
             if image_matrix[i][j][0] > 180 and image_matrix[i][j][1] > 180 and image_matrix[i][j][2] > 180:
+                # 进行换色
                 image_matrix[i][j][0] = 50
                 image_matrix[i][j][1] = 150
                 image_matrix[i][j][2] = 255

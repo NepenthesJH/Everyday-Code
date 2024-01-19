@@ -5,7 +5,8 @@ import requests
 
 
 def Data():
-    url1 = 'https://tiyu.baidu.com/match/LPL/tab/%E8%B5%9B%E7%A8%8B'
+    # url1 = 'https://tiyu.baidu.com/match/LPL/tab/%E8%B5%9B%E7%A8%8B'
+    url1 = 'https://tiyu.baidu.com/match/S13/tab/%E8%B5%9B%E7%A8%8B'
     url2 = 'https://tiyu.baidu.com/match/LCK/tab/%E8%B5%9B%E7%A8%8B'
     headers = {'Cache-Control': 'no-cache'}
     response1 = requests.get(url1, headers)

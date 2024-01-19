@@ -91,7 +91,6 @@ for epoch in range(num_epochs):
         right = accuracy(output, target1)
         train_rights.append(right)
 
-        # batch_idx是每100次进行验证
         if batch_idx % 100 == 0:
             cnn.eval()
             val_rights = []
